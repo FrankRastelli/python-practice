@@ -6,6 +6,7 @@ def roll():
     roll = random.randint(min_value, max_value)
 
     return roll
+
 while True:
     players = input("Enter the number of players (1-4): ")
     if players.isdigit():
@@ -25,6 +26,7 @@ while max(player_scores) < max_score:
     for player_idx in range(players):
         print("Player number", player_idx + 1, "turn has just started!\n")
         print("Your total score is:", player_scores[player_idx], "\n")
+        roll_result = 0
         current_score = 0
 
         while True:
@@ -35,15 +37,19 @@ while max(player_scores) < max_score:
             value = roll()
             if value == 1:
                 print("You rolled a 1! Turn done!")
+                roll_result = 0
+                player_scores[player_idx] -= current_score
                 current_score = 0
                 break
             else:
+                roll_result = 0
+                roll_result += value
                 current_score += value
                 print("You rolled a:", value)
+                player_scores[player_idx] += roll_result
 
-            print("Your score is:", current_score)
+            print("Your current score is:", player_scores[player_idx])
 
-        player_scores[player_idx] += current_score
         print("Your total score is:", player_scores[player_idx], "\n")
 
 max_score = max(player_scores)
